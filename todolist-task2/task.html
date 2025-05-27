@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task List</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Your Tasks</h1>
+    <ul id="taskList"></ul>
+  </div>
+  <script>
+    // Load and display tasks from localStorage
+    const taskList = document.getElementById('taskList');
+    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+    tasks.forEach((task, index) => {
+      const li = document.createElement('li');
+      li.textContent = task;
+
+      const delBtn = document.createElement('button');
+      delBtn.textContent = 'Delete';
+      delBtn.onclick = () => {
+        tasks.splice(index, 1);
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+        location.reload(); // Reload to update list
+      };
+
+      li.appendChild(delBtn);
+      taskList.appendChild(li);
+    });
+  </script>
+</body>
+</html>
